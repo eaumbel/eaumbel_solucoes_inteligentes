@@ -18,7 +18,7 @@ assets/img/           Ícone/logo
 
 Todas as informações ficam em `assets/js/config.js`:
 
-- **WhatsApp**: em `whatsapp.numero`, coloque o número só com dígitos, com 55 + DDD + número (ex.: `5511999999999`).
+- **WhatsApp**: em `whatsapp.link`, coloque o link pronto do WhatsApp (ex.: `https://wa.me/message/...`). Se preferir montar pelo número, deixe `link` vazio e preencha `whatsapp.numero` só com dígitos, com 55 + DDD + número (ex.: `5511999999999`).
 - **Links dos sistemas**: troque `link: "#"` pela URL de cada sistema. Enquanto o link for `#`, o botão aparece como "Link em breve".
 - **Vídeos**: em `youtubeId`, coloque o ID do vídeo do YouTube. Por exemplo, em `https://www.youtube.com/watch?v=abc123`, o ID é `abc123`. Sem ID, o quadro aparece como "Vídeo em breve".
 - **Textos das soluções**: altere `resumo` e `recursos`.

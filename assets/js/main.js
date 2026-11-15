@@ -27,7 +27,8 @@
 
   // WhatsApp
   var wa = cfg.whatsapp || {};
-  var waUrl = "https://wa.me/" + (wa.numero || "") + "?text=" + encodeURIComponent(wa.mensagem || "");
+  var waUrl = wa.link ||
+    "https://wa.me/" + (wa.numero || "") + "?text=" + encodeURIComponent(wa.mensagem || "");
   document.querySelectorAll("[data-whatsapp]").forEach(function (a) {
     a.href = waUrl;
     a.target = "_blank";

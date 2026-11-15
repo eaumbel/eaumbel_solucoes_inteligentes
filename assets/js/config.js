@@ -5,10 +5,12 @@
 window.SITE_CONFIG = {
   empresa: "Eaumbel Soluções Inteligentes",
 
-  // Número no formato internacional, só dígitos: 55 + DDD + número.
-  // Exemplo: "5511999999999"
+  // Use "link" para um link pronto do WhatsApp (ex.: wa.me/message/...).
+  // Se "link" estiver vazio, o site monta o link a partir de "numero" + "mensagem".
+  // "numero" no formato internacional, só dígitos: 55 + DDD + número (ex.: "5511999999999").
   whatsapp: {
-    numero: "5500000000000",
+    link: "https://wa.me/message/FBUQDN5SMSQYF1",
+    numero: "",
     mensagem: "Olá! Vim pelo site e gostaria de saber mais sobre as soluções."
   },
 
