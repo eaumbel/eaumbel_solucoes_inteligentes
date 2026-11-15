@@ -20,7 +20,7 @@ window.SITE_CONFIG = {
       nome: "Gestão",
       resumo: "Controle financeiro, operacional e administrativo em um só lugar.",
       recursos: ["Financeiro e fluxo de caixa", "Cadastros e contratos", "Relatórios e indicadores"],
-      link: "#", // URL de acesso ao sistema
+      link: "https://eaumbel.com.br/gestao/",
       icone: "gestao"
     },
     {
@@ -28,7 +28,7 @@ window.SITE_CONFIG = {
       nome: "Incorporação",
       resumo: "Acompanhamento de empreendimentos do lançamento à entrega.",
       recursos: ["Gestão de unidades e vendas", "Cronograma de obra", "Controle de custos"],
-      link: "#",
+      link: "https://incorporacao.eaumbel.com.br/",
       icone: "incorporacao"
     },
     {
@@ -36,7 +36,7 @@ window.SITE_CONFIG = {
       nome: "Condo Market",
       resumo: "Marketplace e serviços para condomínios e moradores.",
       recursos: ["Ofertas para moradores", "Fornecedores cadastrados", "Comunicação com o condomínio"],
-      link: "#",
+      link: "https://condo-market.lovable.app",
       icone: "condo"
     }
   ],
