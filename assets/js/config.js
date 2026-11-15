@@ -20,7 +20,7 @@ window.SITE_CONFIG = {
       nome: "Gestão",
       resumo: "Controle financeiro, operacional e administrativo em um só lugar.",
       recursos: ["Financeiro e fluxo de caixa", "Cadastros e contratos", "Relatórios e indicadores"],
-      link: "https://eaumbel.com.br/gestao/",
+      link: "https://imobiliaria20.eaumbel.com.br/",
       icone: "gestao"
     },
     {
