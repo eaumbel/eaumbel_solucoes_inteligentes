@@ -1,0 +1,16 @@
+{
+  "name": "eaumbel-solucoes-inteligentes",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "node scripts/dev-server.js",
+    "vendor": "npx -y esbuild@0.25.10 scripts/blob-client-entry.js --bundle --format=esm --platform=browser --minify --outfile=admin/vendor/blob-client.js"
+  },
+  "dependencies": {
+    "@vercel/blob": "2.8.2",
+    "qrcode": "1.5.4"
+  }
+}

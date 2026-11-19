@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Painel Administrativo</title>
+  <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+  <header class="barra">
+    <div class="barra__inner">
+      <a href="/" class="marca" target="_blank" rel="noopener">
+        <img src="/assets/img/favicon.svg" alt="" width="28" height="28">
+        <span>Painel <strong>Eaumbel</strong></span>
+      </a>
+      <div class="barra__acoes" id="barra-acoes" hidden>
+        <a href="/" target="_blank" rel="noopener" class="btn btn--ghost">Ver site</a>
+        <button type="button" class="btn btn--ghost" id="btn-sair">Sair</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="app">
+    <!-- Carregando -->
+    <section class="tela tela--centro" data-tela="carregando">
+      <p class="muted">Carregando…</p>
+    </section>
+
+    <!-- Variáveis de ambiente faltando -->
+    <section class="tela tela--centro" data-tela="nao-configurado" hidden>
+      <div class="caixa">
+        <h1>Painel ainda não configurado</h1>
+        <p>Cadastre as variáveis de ambiente abaixo na Vercel (<em>Settings → Environment Variables</em>) e faça um novo deploy:</p>
+        <ul id="lista-problemas" class="lista-erros"></ul>
+        <p class="muted">O passo a passo completo está no README do repositório.</p>
+      </div>
+    </section>
+
+    <!-- Primeira configuração do Google Authenticator -->
+    <section class="tela tela--centro" data-tela="setup" hidden>
+      <div class="caixa">
+        <h1>Configurar Google Authenticator</h1>
+
+        <form id="form-setup-senha" class="passo">
+          <p>Primeiro acesso: confirme a senha de administrador para gerar o QR Code.</p>
+          <label>Senha<input type="password" name="password" autocomplete="current-password" required></label>
+          <button class="btn" type="submit">Gerar QR Code</button>
+        </form>
+
+        <form id="form-setup-codigo" class="passo" hidden>
+          <ol class="passos">
+            <li>Abra o <strong>Google Authenticator</strong> no celular e toque em <strong>+</strong> → <strong>Ler código QR</strong>.</li>
+            <li>Aponte para o código abaixo.</li>
+          </ol>
+          <div class="qr" id="qr"></div>
+          <details class="muted">
+            <summary>Não consegue ler o QR? Digite a chave manualmente</summary>
+            <code class="segredo" id="segredo-manual"></code>
+          </details>
+          <label>Código de 6 dígitos que aparece no app
+            <input name="code" inputmode="numeric" autocomplete="one-time-code" pattern="\d{6}" maxlength="6" required>
+          </label>
+          <button class="btn" type="submit">Confirmar</button>
+        </form>
+
+        <div id="setup-final" class="passo" hidden>
+          <p class="ok">✓ Google Authenticator configurado no seu celular.</p>
+          <p>Último passo, na Vercel:</p>
+          <ol class="passos">
+            <li>Abra <strong>Settings → Environment Variables</strong> do projeto.</li>
+            <li>Crie a variável <code>TOTP_SECRET</code> com o valor abaixo, marcando todos os ambientes:</li>
+          </ol>
+          <div class="copiar">
+            <code class="segredo" id="segredo-final"></code>
+            <button type="button" class="btn btn--ghost" id="btn-copiar">Copiar</button>
+          </div>
+          <ol class="passos" start="3">
+            <li>Vá em <strong>Deployments</strong>, abra o menu <strong>⋯</strong> do último deploy e clique em <strong>Redeploy</strong>.</li>
+            <li>Volte a esta página e entre com a senha e o código do app.</li>
+          </ol>
+          <p class="aviso">Guarde esse valor em local seguro. Quem tiver a senha e essa chave consegue entrar no painel.</p>
+        </div>
+        <p class="erro" id="setup-erro" role="alert"></p>
+      </div>
+    </section>
+
+    <!-- Login -->
+    <section class="tela tela--centro" data-tela="login" hidden>
+      <form class="caixa" id="form-login">
+        <h1>Entrar no painel</h1>
+        <label>Senha<input type="password" name="password" autocomplete="current-password" required></label>
+        <label>Código do Google Authenticator
+          <input name="code" inputmode="numeric" autocomplete="one-time-code" pattern="\d{6}" maxlength="6" placeholder="000000" required>
+        </label>
+        <button class="btn btn--bloco" type="submit">Entrar</button>
+        <p class="erro" id="login-erro" role="alert"></p>
+      </form>
+    </section>
+
+    <!-- Editor -->
+    <section class="tela" data-tela="editor" hidden>
+      <div class="editor">
+        <div class="aviso aviso--topo" id="aviso-armazenamento" hidden></div>
+
+        <form id="form-editor" novalidate>
+          <section class="bloco">
+            <h2>Cores</h2>
+            <div class="grade grade--3">
+              <label>Cor principal
+                <span class="cor"><input type="color" name="tema.primaria"><input type="text" data-espelho="tema.primaria" maxlength="7"></span>
+              </label>
+              <label>Cor de destaque
+                <span class="cor"><input type="color" name="tema.destaque"><input type="text" data-espelho="tema.destaque" maxlength="7"></span>
+              </label>
+              <div class="previa-cores" id="previa-cores" aria-hidden="true">
+                <span class="previa-cores__btn">Botão</span>
+                <span class="previa-cores__grad"></span>
+              </div>
+            </div>
+            <button type="button" class="link-btn" id="btn-cores-padrao">Restaurar cores padrão</button>
+          </section>
+
+          <section class="bloco">
+            <h2>Textos da página</h2>
+            <div class="grade">
+              <label>Etiqueta acima do título<input name="textos.heroTag" maxlength="80"></label>
+              <label>Título (parte em preto)<input name="textos.heroTitulo" maxlength="120"></label>
+              <label>Título (parte colorida)<input name="textos.heroDestaque" maxlength="120"></label>
+              <label class="grade__cheia">Subtítulo<textarea name="textos.heroSubtitulo" rows="2" maxlength="300"></textarea></label>
+              <label>Título do contato<input name="textos.ctaTitulo" maxlength="80"></label>
+              <label>Texto do contato<input name="textos.ctaTexto" maxlength="300"></label>
+              <label class="grade__cheia">Link do WhatsApp<input name="whatsapp.link" type="url" placeholder="https://wa.me/..."></label>
+            </div>
+          </section>
+
+          <section class="bloco">
+            <h2>Soluções</h2>
+            <div id="editor-solucoes" class="grade grade--3"></div>
+          </section>
+
+          <section class="bloco">
+            <div class="bloco__titulo">
+              <h2>Vídeos</h2>
+              <button type="button" class="btn btn--ghost" id="btn-add-video">+ Adicionar vídeo</button>
+            </div>
+            <p class="muted">Envie um arquivo (MP4, WebM ou MOV, até 200 MB) ou cole um link do YouTube.</p>
+            <div id="editor-videos" class="videos-edit"></div>
+          </section>
+        </form>
+      </div>
+
+      <div class="rodape-salvar">
+        <span id="status-salvar" class="muted" role="status"></span>
+        <button type="button" class="btn" id="btn-salvar">Salvar alterações</button>
+      </div>
+    </section>
+  </main>
+
+  <template id="tpl-solucao">
+    <fieldset class="cartao">
+      <legend></legend>
+      <label>Nome<input data-campo="nome" maxlength="60"></label>
+      <label>Descrição<textarea data-campo="resumo" rows="3" maxlength="300"></textarea></label>
+      <label>Recursos (um por linha)<textarea data-campo="recursos" rows="4"></textarea></label>
+      <label>Link de acesso<input data-campo="link" type="url" placeholder="https://"></label>
+    </fieldset>
+  </template>
+
+  <template id="tpl-video">
+    <fieldset class="cartao video-edit">
+      <div class="video-edit__previa"></div>
+      <div class="video-edit__campos">
+        <label>Título<input data-campo="titulo" maxlength="100"></label>
+        <label>Solução
+          <select data-campo="solucao">
+            <option value="">Nenhuma</option>
+            <option value="gestao">Gestão</option>
+            <option value="incorporacao">Incorporação</option>
+            <option value="condo-market">Condo Market</option>
+          </select>
+        </label>
+        <label>Link do YouTube<input data-campo="youtubeId" placeholder="https://www.youtube.com/watch?v=..."></label>
+        <div class="upload">
+          <label class="btn btn--ghost upload__btn">Enviar arquivo de vídeo
+            <input type="file" accept="video/mp4,video/webm,video/quicktime" hidden>
+          </label>
+          <progress max="100" value="0" hidden></progress>
+          <span class="upload__info muted"></span>
+        </div>
+        <input type="hidden" data-campo="videoUrl">
+        <div class="video-edit__acoes">
+          <button type="button" class="link-btn" data-acao="limpar-arquivo">Remover arquivo</button>
+          <button type="button" class="link-btn" data-acao="subir">↑ Subir</button>
+          <button type="button" class="link-btn" data-acao="descer">↓ Descer</button>
+          <button type="button" class="link-btn link-btn--perigo" data-acao="excluir">Excluir vídeo</button>
+        </div>
+      </div>
+    </fieldset>
+  </template>
+
+  <script src="/assets/js/config.js"></script>
+  <script type="module" src="/admin/admin.js"></script>
+</body>
+</html>

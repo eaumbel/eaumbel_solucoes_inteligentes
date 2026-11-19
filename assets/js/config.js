@@ -1,9 +1,23 @@
 /*
- * Configuração da homepage.
- * Edite apenas este arquivo para trocar links, vídeos e o número do WhatsApp.
+ * Conteúdo padrão da homepage.
+ * O que for salvo na área de administração (/admin) substitui estes valores.
  */
 window.SITE_CONFIG = {
   empresa: "Eaumbel Soluções Inteligentes",
+
+  tema: {
+    primaria: "#1748c0",
+    destaque: "#18b6a0"
+  },
+
+  textos: {
+    heroTag: "Tecnologia para o mercado imobiliário",
+    heroTitulo: "Soluções inteligentes para",
+    heroDestaque: "gestão, incorporação e condomínios",
+    heroSubtitulo: "Sistemas desenvolvidos para simplificar a rotina, organizar informações e apoiar decisões com mais segurança.",
+    ctaTitulo: "Vamos conversar?",
+    ctaTexto: "Tire dúvidas, peça uma demonstração ou solicite uma proposta pelo WhatsApp."
+  },
 
   // Use "link" para um link pronto do WhatsApp (ex.: wa.me/message/...).
   // Se "link" estiver vazio, o site monta o link a partir de "numero" + "mensagem".
@@ -41,12 +55,11 @@ window.SITE_CONFIG = {
     }
   ],
 
-  // Vídeos de apresentação. Use o ID do YouTube (o trecho depois de "v=").
-  // Exemplo: https://www.youtube.com/watch?v=dQw4w9WgXcQ  ->  "dQw4w9WgXcQ"
-  // Deixe youtubeId vazio para exibir o espaço reservado "Em breve".
+  // Vídeos de apresentação: "videoUrl" (arquivo enviado pelo painel) ou "youtubeId".
+  // Sem nenhum dos dois, o quadro aparece como "Vídeo em breve".
   videos: [
-    { titulo: "Conheça o Gestão", solucao: "gestao", youtubeId: "" },
-    { titulo: "Conheça o Incorporação", solucao: "incorporacao", youtubeId: "" },
-    { titulo: "Conheça o Condo Market", solucao: "condo-market", youtubeId: "" }
+    { titulo: "Conheça o Gestão", solucao: "gestao", youtubeId: "", videoUrl: "" },
+    { titulo: "Conheça o Incorporação", solucao: "incorporacao", youtubeId: "", videoUrl: "" },
+    { titulo: "Conheça o Condo Market", solucao: "condo-market", youtubeId: "", videoUrl: "" }
   ]
 };
